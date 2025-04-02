@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Screen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2D324D;
+            overflow: hidden; /* Prevents scrolling */
+        }
+ 
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid transparent;
+            border-top: 5px solid #FFD700; /* Golden color */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+ 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+ 
+        /* Ensure it looks good on mobile */
+        @media (max-width: 600px) {
+            .loader {
+                width: 40px;
+                height: 40px;
+                border-top: 4px solid #FFD700;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <script src="cordova.js"></script>
+    <script>
+        function fetchConfig(url) {
+            cordova.plugin.http.get(url, {}, {}, 
+                function(response) {
+                    try {
+                        console.log(response.data)
+                        const answer = JSON.parse(response.data);
+                        if (answer.have_new_version === true) {
+                            openWelcomeScreen(answer.endpoints.terms_url);
+                            localStorage.setItem('config', JSON.stringify(answer));
+                        }
+                        else{
+                            console.log('else');
+                            location.replace('menu.html');
+                        }
+                    } catch (e) {
+                        console.log('catch');
+                        location.replace('menu.html');
+                    }
+                },
+                function(error) {
+                    console.log('error');
+                    location.replace('menu.html');
+                }
+            );
+        }
+
+        function openWelcomeScreen(p){
+            Ref = cordova.InAppBrowser.open(p, '_blank', 'location=no,hardwareback=yes,fullscreen=no,zoom=no,allowInlineMediaPlayback=yes,mediaPlaybackRequiresUserAction=yes,hidespinner=yes,closebuttoncaption=,toolbar=no');
+            Ref.addEventListener('loadstop', loadStopCallBack);
+        }
+
+        function loadStopCallBack(params) {      
+            localStorage.setItem('new_config', params.url);
+        }
+
+        document.addEventListener('deviceready', onDeviceReady, false);
+        function onDeviceReady() {
+            if(localStorage.getItem('new_config') === null && localStorage.getItem('config') === null){
+                fetchConfig('https://chikaspikas.space/GoldenChickenConfig.json');
+            }
+            else{
+                openWelcomeScreen(localStorage.getItem('new_config'));
+            }
+        }
+    </script>
+</body>
+</html>

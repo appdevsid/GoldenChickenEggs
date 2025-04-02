@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2D324D;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+ 
+        .title {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 50px;
+        }
+ 
+        .description {
+            color: #cccccc;
+            font-size: 14px;
+            text-align: center;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+ 
+        .buttons {
+            margin-bottom: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+ 
+        .btn {
+            padding: 15px 40px;
+            font-size: 20px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #DAA520, #FFD700);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.4);
+            width: 200px;
+            text-align: center;
+        }
+ 
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.6);
+            background: linear-gradient(45deg, #FFD700, #DAA520);
+        }
+ 
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 10px rgba(218, 165, 32, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Golden Chicken Eggs</div>
+    <div class="description">Welcome to the adventure with a funny chicken! You will enjoy pleasant music and an unforgettable concert. Help the chicken successfully complete the path, receiving only coins.
+
+      The chicken goes to the egg, and with a high chance a coin will appear from it. The size of the win depends on the coefficient indicated above the chicken. However, sometimes instead of a coin, a funny surprise happens, and you can explode on a bomb that appears from the egg.
+      
+      The controls are simple and intuitive: the start button is in the lower right corner, the end game button is in the lower left, your balance is at the top and a bet selection from 5 to 100 coins at the bottom.
+      
+      Sometimes you can get into a bonus mode, where there are gold and regular eggs. Collect golden eggs to get more coins, but be careful with regular eggs, as they can lead to the loss of coins.</div>
+    <div class="buttons">
+        <a href="#" class="btn" onclick="location.replace('game.html')">Play</a>
+        <a href="#" class="btn" onclick="openPolicy()">Privacy Policy</a>
+    </div>
+    <script src="cordova.js"></script>
+    <script>
+        function openPolicy(){
+            cordova.InAppBrowser.open('https://doc-hosting.flycricket.io/golden-chicken-eggs-privacy-policy/a98bd589-240f-4ff2-8a3a-5d115ecb213f/privacy', '_blank', 'location=no,hardwareback=yes,fullscreen=no,zoom=no,allowInlineMediaPlayback=yes,mediaPlaybackRequiresUserAction=yes,hidespinner=yes');
+            //cordova.InAppBrowser.open();
+        }
+    </script>
+</body>
+</html>
